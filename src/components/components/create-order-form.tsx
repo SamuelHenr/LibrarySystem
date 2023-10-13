@@ -39,7 +39,7 @@ export default function CreateOrderForm (orderProps: CreateOrderFormProps) {
         <input id="quantity" {...register('quantity', { required: true })} />
 
         <label htmlFor="side">Side:</label>
-        <select id="side" {...register('side')} id="side">
+        <select id="side" {...register('side')}>
           <option value={OrderSide.BUY}>Buy</option>
           <option value={OrderSide.SELL}>Sell</option>
         </select>

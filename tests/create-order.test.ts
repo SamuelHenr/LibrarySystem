@@ -1,17 +1,10 @@
 import { v4 } from 'uuid'
-import { type Order } from '../src/interfaces'
+import { Order } from '../src/interfaces'
 import OrderSide from '../src/interfaces/order/order-side'
 import { createOrder } from '../src/services/create-order'
 
 //função que cria um objeto do tipo Order
-const createOrderObject = ({
-  id,
-  price,
-  quantity,
-  quantityRemaining,
-  side,
-  createdAt
-}: {
+const createOrderObject = ({id, price, quantity, quantityRemaining, side, createdAt}: {
   id?: string
   price?: number
   quantity?: number
