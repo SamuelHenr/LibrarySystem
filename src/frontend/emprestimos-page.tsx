@@ -1,6 +1,10 @@
 import livros from "./storage/livrosEmprestados.json"
+// import { useState } from 'react'
 
 export default function EmprestimosPage () {
+
+	// const [livros, setBooks] = useState<Livro[]>([])
+
 	return (
 		<div >
 			<h1>Livros emprestados</h1>

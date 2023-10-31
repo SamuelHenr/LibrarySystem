@@ -1,26 +1,30 @@
 import livros from "../frontend/storage/livros.json";
 import livrosEmprestados from "../frontend/storage/livrosEmprestados.json";
 import Livro from "../interfaces/livro";
-import * as fs from 'fs';
 
 class FileHandler {
 
-    storagePath = "../frontend/storage/";
-
     getLivroById(idLivro: string): Livro | null {
 
+        let bookFound = null;
+
         livros.forEach((livro) => {
-            if(livro.id == idLivro) return livro;
+            if(livro.id == idLivro) {
+                bookFound = livro;
+                return;
+            }
         });
 
-        return null;
+        return bookFound;
     }
 
-    getLivrosFromPath(path: string) {
-        const loadedConfig = fs.readFileSync(this.storagePath + path, {
-            encoding: 'utf-8',
-        });
-        return JSON.parse(loadedConfig);
+    setLivrosEmprestados(livros : any) {
+        localStorage.setItem("livrosEmprestados", JSON.stringify(livros));
+    }
+
+    getLivrosEmprestados() {
+        let books = localStorage.getItem("livrosEmprestados");
+        if(books) return JSON.parse(books);
     }
 }
 
