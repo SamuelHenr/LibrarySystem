@@ -1,19 +1,40 @@
 .create-order-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 300px;
-    height: 250px;
-    margin-bottom: 20px;
-    margin-left: 40px;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 300px;
+  height: 250px;
+  margin-bottom: 20px;
+  margin-left: 40px;
+}
   
-  .orders-table {
-    width: calc(100% - 80px);
-    margin: 40px;
-    text-align: center;
-  }
+.orders-table {
+  width: calc(100% - 80px);
+  margin: 40px;
+  text-align: center;
+}
 
-  .ml-5 {
-    margin-left: 5px;
-  }
+.ml-5 {
+  margin-left: 5px;
+}
+
+.remove-layout {
+  text-decoration: none;
+  color: black;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.w-60 {
+  width: 60%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+table, th, td {
+  border:1px solid black;
+}
