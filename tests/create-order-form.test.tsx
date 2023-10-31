@@ -5,7 +5,7 @@
 import React from 'react'
 import { render, fireEvent, screen } from "@testing-library/react"
 import { useForm } from "react-hook-form"
-import CreateOrderForm from "../src/components/components/create-order-form"
+import CreateOrderForm from "../src/frontend/components/create-order-form"
 import OrderSide from "../src/interfaces/order/order-side"
 import '@testing-library/jest-dom'
 

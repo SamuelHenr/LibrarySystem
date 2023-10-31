@@ -1,3 +1,4 @@
+import livros from "./storage/livrosEmprestados.json"
 
 export default function EmprestimosPage () {
 	return (
@@ -14,12 +15,14 @@ export default function EmprestimosPage () {
 					</tr>
 				</thead>
 				<tbody>
-					<tr className="text-center">
-						<td>Título</td>
-						<td>Data de entrega</td>
-						<td>Renovações</td>
-						<td>Renovar</td>
-					</tr>
+					{livros.map((livro) => (
+						<tr key={livro.idLivro} className="text-center">
+							<td>{livro.titulo}</td>
+							<td>{livro.entrega}</td>
+							<td>{livro.limite}</td>
+							<td><button>Renovar</button></td>
+						</tr>
+					))}
 				</tbody>
 			</table>
 

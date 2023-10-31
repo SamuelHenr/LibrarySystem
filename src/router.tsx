@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import IndexPage from './components/index-page'
-import EmprestimosPage from './components/emprestimos-page'
+import IndexPage from './frontend/index-page'
+import EmprestimosPage from './frontend/emprestimos-page'
 
 function Router () {
   return (
