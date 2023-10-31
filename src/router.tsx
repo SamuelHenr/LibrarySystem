@@ -1,12 +1,12 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import TradingOrderMatcher from './components/trading-order-matcher'
+import IndexPage from './components/index-page'
 
 function Router () {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={'/'} key={'/'} element={<TradingOrderMatcher />} />
+        <Route path={'/'} key={'/'} element={<IndexPage />} />
       </Routes>
     </BrowserRouter>
   )
