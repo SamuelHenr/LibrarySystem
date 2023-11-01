@@ -2,7 +2,6 @@ import { addDays, bookIsAlreadyLent, formatBook } from "../src/services/lend-boo
 import {expect, describe, it} from '@jest/globals';
 import livrosEmprestados from "./data/livros-emprestados.json";
 import Livro from "../src/interfaces/livro";
-import LivroEmprestado from "../src/interfaces/livro-emprestado";
 
 describe('teste da função de adicionar dias', () => {
     it('teste para acrescentar dias', () => {
