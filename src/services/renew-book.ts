@@ -7,16 +7,13 @@ export const formatDateStringToObject = (date : string) : Date => {
     return (new Date(parseInt(year), parseInt(month)-1, parseInt(day)));
 }
 
-export const checkBooks = () : boolean => {
+export const checkBooks = (livrosEmprestados : LivroEmprestado[]) : boolean => {
     const todayTimestamp = (new Date()).toLocaleDateString();
     let userIsFree = true;
-    const fileHandler = new FileHandler();
-    let livrosEmprestados = fileHandler.getLivrosEmprestados();
 
     if(livrosEmprestados) {
         livrosEmprestados.forEach((livroEmprestado : LivroEmprestado) => {
             if(formatDateStringToObject(livroEmprestado.entrega).getTime() < formatDateStringToObject(todayTimestamp).getTime()) {
-                alert("Usuário está pendente! Devolva o livro pendente primeiro!");
                 userIsFree = false;
                 return;
             }
@@ -28,26 +25,27 @@ export const checkBooks = () : boolean => {
 
 export const renewBook = (livro: LivroEmprestado) => {
 
-    if(checkBooks()) {
+    const fileHandler = new FileHandler();
+    let livrosEmprestados = fileHandler.getLivrosEmprestados();
 
-        const fileHandler = new FileHandler();
-        let livrosEmprestados = fileHandler.getLivrosEmprestados();
-    
-        if(livrosEmprestados) {
-            livrosEmprestados.forEach((livroEmprestado : LivroEmprestado) => {
-                if(livroEmprestado.idLivro == livro.idLivro) {
-                    if(livroEmprestado.limite > 0) {
-                        livroEmprestado.entrega = addDays(formatDateStringToObject(livroEmprestado.entrega), 15);
-                        livroEmprestado.limite--;
-                        fileHandler.setLivrosEmprestados(livrosEmprestados);
-                        window.location.replace("/emprestimos");
-                    } else {
-                        alert("Limite de renovações atingida!");
-                    }
+    if(!checkBooks(livrosEmprestados)) {
+        alert("Usuário está pendente! Devolva o livro pendente primeiro!");
+        return;
+    }
+
+    if(livrosEmprestados) {
+        livrosEmprestados.forEach((livroEmprestado : LivroEmprestado) => {
+            if(livroEmprestado.idLivro == livro.idLivro) {
+                if(livroEmprestado.limite > 0) {
+                    livroEmprestado.entrega = addDays(formatDateStringToObject(livroEmprestado.entrega), 15);
+                    livroEmprestado.limite--;
+                    fileHandler.setLivrosEmprestados(livrosEmprestados);
+                    window.location.replace("/emprestimos");
+                } else {
+                    alert("Limite de renovações atingida!");
                 }
-            });
-        }
-
+            }
+        });
     }
 
 }

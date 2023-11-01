@@ -20,33 +20,39 @@ export const bookIsAlreadyLent = (livrosEmprestados : LivroEmprestado[], idLivro
     return bookIsLent;
 }
 
+export const formatBook = (livro: Livro | null) => {
+    if(livro) {
+
+        if(parseInt(livro.reserva) <= 0) return;
+
+        const thisBook : LivroEmprestado = {
+            idLivro: livro.id,
+            titulo: livro.titulo,
+            entrega: addDays(new Date(), 15),
+            limite: 5
+        };
+
+        return thisBook;
+    }
+}
+
 export const lendBook = (livro: Livro, fileHandler : FileHandler) => {
 
     let livrosEmprestados = fileHandler.getLivrosEmprestados();
+    if(!livrosEmprestados) livrosEmprestados = [];
 
-    if(livrosEmprestados) {
-        if(bookIsAlreadyLent(livrosEmprestados, livro.id)){
-            alert("Livro já está em empréstimo para o usuário");
-            return;
-        }
-    } else livrosEmprestados = [];
-
-    if(checkBooks()) {
-        const bookData = fileHandler.getLivroById(livro.id);
-
-        if(bookData) {
-    
-            const thisBook : LivroEmprestado = {
-                idLivro: bookData.id,
-                titulo: bookData.titulo,
-                entrega: addDays(new Date(), 15),
-                limite: 5
-            };
-        
-            livrosEmprestados.push(thisBook);
-            fileHandler.setLivrosEmprestados(livrosEmprestados);
-            window.location.replace("/emprestimos");
-        }
+    if(bookIsAlreadyLent(livrosEmprestados, livro.id)){
+        alert("Livro já está em empréstimo para o usuário");
+        return;
     }
 
+    if(!checkBooks(livrosEmprestados)) {
+        alert("Usuário está pendente! Devolva o livro pendente primeiro!");
+        return;
+    }
+
+    livrosEmprestados.push(formatBook(fileHandler.getLivroById(livro.id)));
+    fileHandler.setLivrosEmprestados(livrosEmprestados);
+    window.location.replace("/emprestimos");
+ 
 }
