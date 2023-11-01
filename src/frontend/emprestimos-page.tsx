@@ -1,9 +1,17 @@
-import livros from "./storage/livrosEmprestados.json"
-// import { useState } from 'react'
+import LivroEmprestado from '../interfaces/livro-emprestado';
+import { useEffect, useState } from 'react'
+import FileHandler from '../repositories/fileHandler';
+import {renewBook, returnBook} from "../services/renew-book";
 
 export default function EmprestimosPage () {
 
-	// const [livros, setBooks] = useState<Livro[]>([])
+	const [livros, setBooks] = useState<LivroEmprestado[]>([])
+
+	useEffect(() => {
+		const fileHandler = new FileHandler();
+		const books = fileHandler.getLivrosEmprestados();
+		if(books) setBooks(books);
+	  }, []);
 
 	return (
 		<div >
@@ -19,14 +27,24 @@ export default function EmprestimosPage () {
 					</tr>
 				</thead>
 				<tbody>
-					{livros.map((livro) => (
-						<tr key={livro.idLivro} className="text-center">
-							<td>{livro.titulo}</td>
-							<td>{livro.entrega}</td>
-							<td>{livro.limite}</td>
-							<td><button>Renovar</button></td>
+					{livros.length? (
+						livros.map((livro) => (
+							<tr key={livro.idLivro} className="text-center">
+								<td>{livro.titulo}</td>
+								<td>{livro.entrega}</td>
+								<td>{livro.limite}</td>
+								<td>
+									<button onClick={() => renewBook(livro)}>Renovar</button>
+									<button className="ml-5" onClick={() => returnBook(livro)}>Devolver</button>
+								</td>
+							</tr>
+						))
+					) : (
+						<tr className="text-center">
+							<td colSpan={4}>Nenhum livro emprestado para este usuário!</td>
 						</tr>
-					))}
+					)
+					}
 				</tbody>
 			</table>
 

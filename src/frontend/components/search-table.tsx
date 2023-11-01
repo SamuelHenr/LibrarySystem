@@ -30,7 +30,7 @@ export default function SearchTable ({livros}: TableSearchParameter) {
 							<td>{livro.assunto}</td>
 							<td>{livro.publicacao}</td>
 							<td>{livro.reserva}</td>
-							<td><button onClick={() => lendBook(livro.id)}>Emprestar</button></td>
+							<td><button onClick={() => lendBook(livro)}>Emprestar</button></td>
 						</tr>
 					))}
 				</tbody>
