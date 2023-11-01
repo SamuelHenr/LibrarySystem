@@ -7,13 +7,12 @@ export const formatDateStringToObject = (date : string) : Date => {
     return (new Date(parseInt(year), parseInt(month)-1, parseInt(day)));
 }
 
-export const checkBooks = (livrosEmprestados : LivroEmprestado[]) : boolean => {
-    const todayTimestamp = (new Date()).toLocaleDateString();
+export const checkBooks = (livrosEmprestados : LivroEmprestado[], todayTimestamp : number) : boolean => {
     let userIsFree = true;
 
     if(livrosEmprestados) {
         livrosEmprestados.forEach((livroEmprestado : LivroEmprestado) => {
-            if(formatDateStringToObject(livroEmprestado.entrega).getTime() < formatDateStringToObject(todayTimestamp).getTime()) {
+            if(formatDateStringToObject(livroEmprestado.entrega).getTime() < todayTimestamp) {
                 userIsFree = false;
                 return;
             }
@@ -28,7 +27,7 @@ export const renewBook = (livro: LivroEmprestado) => {
     const fileHandler = new FileHandler();
     let livrosEmprestados = fileHandler.getLivrosEmprestados();
 
-    if(!checkBooks(livrosEmprestados)) {
+    if(!checkBooks(livrosEmprestados, formatDateStringToObject((new Date()).toLocaleDateString()).getTime())) {
         alert("Usuário está pendente! Devolva o livro pendente primeiro!");
         return;
     }

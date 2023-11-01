@@ -1,7 +1,7 @@
 import LivroEmprestado from "../interfaces/livro-emprestado"
 import Livro from "../interfaces/livro"
 import FileHandler from "../repositories/fileHandler";
-import { checkBooks } from "./renew-book";
+import { checkBooks, formatDateStringToObject } from "./renew-book";
 
 export const addDays = (date : Date, add : number) : string => {
     return (new Date(date.setDate(date.getDate() + add))).toLocaleDateString('pt-BR')
@@ -46,7 +46,7 @@ export const lendBook = (livro: Livro, fileHandler : FileHandler) => {
         return;
     }
 
-    if(!checkBooks(livrosEmprestados)) {
+    if(!checkBooks(livrosEmprestados, formatDateStringToObject((new Date()).toLocaleDateString()).getTime())) {
         alert("Usuário está pendente! Devolva o livro pendente primeiro!");
         return;
     }
