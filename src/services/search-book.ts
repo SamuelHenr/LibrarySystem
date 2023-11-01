@@ -10,7 +10,7 @@ export const searchBook = ({searchInput, type, order}: SearchParameters) => {
         if(type == "livre") {
             allBooks.forEach((bookData => {
                 for(const book in bookData) {
-                    if(bookData[book as keyof typeof bookData].includes(searchInput)) {
+                    if(formatString(bookData[book as keyof typeof bookData]).includes(formatString(searchInput))) {
                         booksFound.push(bookData);
                         break;
                     }
@@ -18,7 +18,7 @@ export const searchBook = ({searchInput, type, order}: SearchParameters) => {
             }));
         } else {
             allBooks.forEach((book => {
-                if(book[type as keyof typeof book].includes(searchInput)) booksFound.push(book);
+                if(formatString(book[type as keyof typeof book]).includes(formatString(searchInput))) booksFound.push(book);
             }));
         }
     
@@ -26,4 +26,8 @@ export const searchBook = ({searchInput, type, order}: SearchParameters) => {
     }
 
     return booksFound;
+}
+
+export const formatString = (str : string) : string => {
+    return (str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')).toLowerCase();
 }
