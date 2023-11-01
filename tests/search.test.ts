@@ -1,6 +1,5 @@
-import livros from "../src/frontend/storage/livros.json";
 import { searchBook } from "../src/services/search-book";
-import SearchParameters from "../src/interfaces/search-parameters"
+import SearchParameters from "../src/interfaces/search-parameters";
 import {expect, describe, it} from '@jest/globals';
 
 describe('teste para busca livre do método search', () => {

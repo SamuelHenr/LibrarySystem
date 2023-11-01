@@ -4,24 +4,31 @@ import FileHandler from "../repositories/fileHandler";
 import { checkBooks } from "./renew-book";
 
 export const addDays = (date : Date, add : number) : string => {
-    return (new Date(date.setDate(date.getDate() + add))).toLocaleDateString()
+    return (new Date(date.setDate(date.getDate() + add))).toLocaleDateString('pt-BR')
 }
 
-export const lendBook = (livro: Livro) => {
-
+export const bookIsAlreadyLent = (livrosEmprestados : LivroEmprestado[], idLivro : string) : boolean => {
     let bookIsLent = false;
-    const fileHandler = new FileHandler();
+
+    livrosEmprestados.forEach((livroEmprestado : LivroEmprestado) => {
+        if(livroEmprestado.idLivro == idLivro) {
+            bookIsLent = true;
+            return;
+        }
+    });
+
+    return bookIsLent;
+}
+
+export const lendBook = (livro: Livro, fileHandler : FileHandler) => {
+
     let livrosEmprestados = fileHandler.getLivrosEmprestados();
 
     if(livrosEmprestados) {
-        livrosEmprestados.forEach((livroEmprestado : LivroEmprestado) => {
-            if(livroEmprestado.idLivro == livro.id) {
-                alert("Livro já está em empréstimo para o usuário");
-                bookIsLent = true;
-                return;
-            }
-        });
-        if(bookIsLent) return;
+        if(bookIsAlreadyLent(livrosEmprestados, livro.id)){
+            alert("Livro já está em empréstimo para o usuário");
+            return;
+        }
     } else livrosEmprestados = [];
 
     if(checkBooks()) {

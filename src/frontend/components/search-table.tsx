@@ -1,6 +1,7 @@
-import '../page-styles.css'
-import Livro from "../../interfaces/livro"
-import { lendBook } from "../../services/lend-book"
+import '../page-styles.css';
+import Livro from "../../interfaces/livro";
+import { lendBook } from "../../services/lend-book";
+import FileHandler from '../../repositories/fileHandler';
 
 interface TableSearchParameter {
 	livros: Livro[]
@@ -30,7 +31,7 @@ export default function SearchTable ({livros}: TableSearchParameter) {
 							<td>{livro.assunto}</td>
 							<td>{livro.publicacao}</td>
 							<td>{livro.reserva}</td>
-							<td><button onClick={() => lendBook(livro)}>Emprestar</button></td>
+							<td><button onClick={() => lendBook(livro, new FileHandler())}>Emprestar</button></td>
 						</tr>
 					))}
 				</tbody>
